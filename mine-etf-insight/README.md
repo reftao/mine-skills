@@ -16,19 +16,21 @@ A 股 ETF 持仓透视 skill — 把一只 ETF 从「产品标签」拆回「真
 | [`wind-mcp-skill`](https://aifinmarket.wind.com.cn) | 主数据源（必需） | 需 `WIND_API_KEY`，由 wind-mcp-skill 自身的 `~/.wind-aifinmarket/config` 管理；本 skill **不**接触 key |
 | `akshare` (Python) | Fallback | 无 key，覆盖股票型基金重仓；港股 / 债券 / QDII 覆盖受限 |
 
-> `references/workflow.md` 中示例路径使用 `~/.claude/skills/wind-mcp-skill`，请按你本地 wind-mcp-skill 实际安装位置调整。
+> `references/workflow.md` 会在每次调用前用 shell 自动探测 `wind-mcp-skill` 安装位置（兼容 `~/.claude/skills/` / `~/.agents/skills/` / 项目级 `./.claude/skills/`），无需手动改路径。
 
 ## 安装
 
-把整个目录复制到 Claude Code 识别的 skills 路径之一即可，例如：
+推荐用 [`npx skills`](https://github.com/vercel-labs/skills)（详见仓库根 [`README.md`](../README.md)）：
 
 ```bash
-# 用户级
-cp -r mine-etf-insight ~/.claude/skills/
+npx skills add reftao/mine-skills --skill mine-etf-insight
+```
 
-# 或 openclaw / agents
-cp -r mine-etf-insight ~/.openclaw/skills/
-cp -r mine-etf-insight ~/.agents/skills/
+也可以手动拷贝目录到 Claude Code 识别的任一 skills 路径：
+
+```bash
+cp -r mine-etf-insight ~/.claude/skills/   # 用户级（Claude Code）
+cp -r mine-etf-insight ~/.agents/skills/   # 全局（vercel-labs/skills 默认）
 ```
 
 安装后 `/mine-etf-insight` 会出现在 Skill 列表中。

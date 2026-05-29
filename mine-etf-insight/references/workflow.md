@@ -5,10 +5,15 @@
 调用 wind-mcp-skill 时使用以下命令格式（**不要在命令里写 key**，依赖 `~/.wind-aifinmarket/config` 自动加载）：
 
 ```bash
-cd ~/.claude/skills/wind-mcp-skill && node scripts/cli.mjs call <server> <tool> '<json>'
+WIND_DIR=$(ls -d \
+  ~/.claude/skills/wind-mcp-skill \
+  ~/.agents/skills/wind-mcp-skill \
+  ./.claude/skills/wind-mcp-skill \
+  2>/dev/null | head -1)
+cd "$WIND_DIR" && node scripts/cli.mjs call <server> <tool> '<json>'
 ```
 
-> 路径示例使用 `~/.claude/skills/wind-mcp-skill`，请按你本地 wind-mcp-skill 实际安装位置调整（例如 `~/.openclaw/skills/wind-mcp-skill` 或 `~/.agents/skills/wind-mcp-skill`）。下文所有 `node scripts/cli.mjs ...` 命令均依赖该 `cd`。
+> 上面 `WIND_DIR=...` 这一段会自动探测 `wind-mcp-skill` 的安装位置（兼容用户级 / 全局 / 项目级三种装法）。下文所有 `node scripts/cli.mjs ...` 命令都假定已经在 `wind-mcp-skill` 目录下，按需复用上面的 `cd "$WIND_DIR"`。若 `WIND_DIR` 为空，说明 `wind-mcp-skill` 没装好，先回头按 mine-skills README 安装。
 
 如果命中 `KEY_MISSING`，按 wind-mcp-skill 的提示执行 `setup-key`，**不要把 key 写到任何文件或脚本中**。
 
